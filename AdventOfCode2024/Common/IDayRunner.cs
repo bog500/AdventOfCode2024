@@ -8,8 +8,7 @@ namespace AdventOfCode2024.Common
 {
     public interface IDayRunner
     {
-        public void Demo();
-        public void Real();
+        public string Run();
         public IPartSolver GetSolver();
     }
 }

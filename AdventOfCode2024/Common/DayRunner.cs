@@ -65,24 +65,15 @@ namespace AdventOfCode2024
             };
         }
 
-        public void Demo()
+        public string Run()
         {
             using (new CodeTimer())
             {
                 var ans = solver.Solve(demoLines);
                 ConsoleWritter.Answer(DemoEnum.Demo, ans);
+                return ans;
             }
         }
-
-        public void Real()
-        {
-            using (new CodeTimer())
-            {
-                var ans = solver.Solve(clueLines);
-                ConsoleWritter.Answer(DemoEnum.Real, ans);
-            }
-        }
-
 
         public IPartSolver GetSolver() => solver;
     }
