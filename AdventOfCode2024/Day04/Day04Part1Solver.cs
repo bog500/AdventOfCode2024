@@ -81,9 +81,9 @@ namespace AdventOfCode2024.Day04
 
         private string GetValue(Coord c)
         {
-            if (dict.ContainsKey(c))
+            if (dict.TryGetValue(c, out char value))
             {
-                return dict[c].ToString();
+                return value.ToString();
             }
             return "";
         }
