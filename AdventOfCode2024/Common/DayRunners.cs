@@ -2,6 +2,7 @@
 using AdventOfCode2024.Day03;
 using AdventOfCode2024.Day04;
 using AdventOfCode2024.Day05;
+using AdventOfCode2024.Day06;
 using static AdventOfCode2024.Common.Enums;
 
 namespace AdventOfCode2024.Common
@@ -29,6 +30,8 @@ namespace AdventOfCode2024.Common
                 (DayEnum.Day04, PartEnum.Part2) => new DayRunner<Day04Part2Solver>(file),
                 (DayEnum.Day05, PartEnum.Part1) => new DayRunner<Day05Part1Solver>(file),
                 (DayEnum.Day05, PartEnum.Part2) => new DayRunner<Day05Part2Solver>(file),
+                (DayEnum.Day06, PartEnum.Part1) => new DayRunner<Day06Part1Solver>(file),
+                (DayEnum.Day06, PartEnum.Part2) => new DayRunner<Day06Part2Solver>(file),
             };
         }
     }
