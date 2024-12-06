@@ -7,8 +7,6 @@ namespace AdventOfCode2024.Day05
 
     public class Day05Part2Solver : Day05BaseSolver
     {
-        Dictionary<Coord, char> dict = [];
-
         public override string Solve(List<string> lines)
         {
             int sum = 0;
