@@ -12,7 +12,7 @@ namespace AdventOfCode2024.Common
         public static List<int> ParseInt(string s, char splitChar = ' ')
         {
             List<int> ints = s
-                .Split(splitChar)
+                .Split(splitChar, StringSplitOptions.RemoveEmptyEntries)
                 .Where(o => !string.IsNullOrEmpty(o))
                 .Select(o => int.Parse(o))
                 .ToList();
@@ -22,7 +22,7 @@ namespace AdventOfCode2024.Common
         public static List<long> ParseLong(string s, char splitChar = ' ')
         {
             List<long> ints = s
-                .Split(splitChar)
+                .Split(splitChar, StringSplitOptions.RemoveEmptyEntries)
                 .Where(o => !string.IsNullOrEmpty(o))
                 .Select(o => long.Parse(o))
                 .ToList();
