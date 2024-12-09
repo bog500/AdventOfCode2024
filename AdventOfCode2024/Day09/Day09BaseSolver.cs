@@ -9,6 +9,8 @@ namespace AdventOfCode2024.Day09
 {
     public abstract class Day09BaseSolver : IPartSolver
     {
+        private const int EMPTY = -1;
+
         public abstract string Solve(List<string> lines);
 
         public string Expand(string str)
@@ -25,11 +27,15 @@ namespace AdventOfCode2024.Day09
                 {
                     if (isData)
                     {
-                        idOriginal[sb.Length] = id;
+                        ids[sb.Length] = id;
                         sb.Append(id % 10);
                     }
                     else
+                    {
+                        ids[sb.Length] = EMPTY;
                         sb.Append('.');
+                    }
+                        
                 }
                 if(isData)
                 {
@@ -45,39 +51,23 @@ namespace AdventOfCode2024.Day09
         }
 
 
-        Dictionary<int, int> idOriginal = []; // index -> id
-        Dictionary<int, int> idMoved = []; // index -> id
+        Dictionary<int, int> ids = []; // index -> id
         HashSet<int> movedIds = []; // already moved ids
-
-        public int GetId(int index)
-        {
-            if (!idMoved.TryGetValue(index, out int id))
-            {
-                id = idOriginal[index];
-            }
-            return id;
-        }
 
         public long CheckSum(string str)
         {
-            int index = -1;
+            int index = 0;
             long sum = 0;
             foreach (char c in str)
             {
+                int id = ids[index];
+
+                if(id > 0)
+                    sum += index * id;
+
                 index++;
 
-                if (c == '.')
-                    continue;
-
-                int id = GetId(index);
-
-                sum += index * id;
-
             }
-
-            // bad:
-            // 7023831612552 (too big)
-            // 7022283591665 (too big)
 
             return sum;
         }
@@ -102,12 +92,10 @@ namespace AdventOfCode2024.Day09
                     if (ch[j] == '.')
                     {
 
-                        if (!idMoved.TryGetValue(index, out int id))
-                        {
-                            idOriginal.TryGetValue(index, out id);
-                        }
+                        int id = ids[index];
 
-                        idMoved[j] = id;
+                        ids[index] = EMPTY;
+                        ids[j] = id;
 
                         ch[j] = c;
                         minJ = j - 1;
@@ -120,6 +108,33 @@ namespace AdventOfCode2024.Day09
             return str2;
         }
 
+        public bool IsEmpty(int index)
+        {
+            return ids[index] == EMPTY;
+        }
+
+        public bool IsEmpty(int index, int length)
+        {
+            for(int i = 0; i < length; i++)
+            {
+                if (!IsEmpty(index + i))
+                    return false;
+            }
+            return true;
+        }
+
+        public int Findspot(int maxIndex, int length)
+        {
+            // find spot
+            for (int spotStart = 0; spotStart < maxIndex; spotStart++)
+            {
+                if (IsEmpty(spotStart, length))
+                {
+                    return spotStart;
+                }
+            }
+            return EMPTY;
+        }
 
         public string CompactFullBlocks(string str)
         {
@@ -127,70 +142,37 @@ namespace AdventOfCode2024.Day09
 
             for (int indexEnd = str.Length - 1; indexEnd > 0; indexEnd--)
             {
-                char c = ch[indexEnd];
-                if (c == '.')
-                    continue;
+                int id = ids[indexEnd];
 
-                int id = GetId(indexEnd);
+                if (id == EMPTY)
+                    continue;
 
                 if (movedIds.Contains(id))
                     continue;
 
                 // find start of block
-                int indexStart = indexEnd;
-                while (indexStart >= 0 && ch[indexStart] == c)
-                {
-                    char c2 = ch[indexStart];
-                    indexStart--;
-                }
-                indexStart++; // cancel last indexStart--
+                var blocks = ids.Where(o => o.Value == id);
+                int blockLength = blocks.Count();
+                int indexStart = blocks.Select(o => o.Key).Min();
 
-                if (indexStart < 0)
-                    continue;
+                int spotStart = Findspot(indexStart, blockLength);
 
-                int blockLength = indexEnd - indexStart + 1;
-
-                // find spot
-                int spotStart = -1;
-                for(int i = 0; i < indexStart; i++)
-                {
-                    if(ch[i..(i + blockLength)].All(o => o == '.'))
-                    {
-                        // spot found
-                        spotStart = i;
-                        break;
-                    }
-                    i += 1;
-                }
-
-                if (spotStart < 0)
+                if (spotStart == EMPTY)
                 {
                     indexEnd = indexEnd - blockLength + 1;
                     continue; // no spot
                 }
 
                 movedIds.Add(id);
-
-                //Console.WriteLine(new string(ch));
-
-
-                // remove original block
-                for (int i = indexStart; i <= indexEnd; i++)
+                
+                for (int i = 0; i < blockLength; i++)
                 {
-                    ch[i] = '.';
-                    idOriginal[i] = 0;
+                    // remove original block
+                    ids[indexStart + i] = EMPTY;
+
+                    // move new id
+                    ids[spotStart + i] = id;
                 }
-
-                //Console.WriteLine(new string(ch));
-
-                for (int j = spotStart; j < spotStart + blockLength; j++)
-                {
-                    idMoved[j] = id;
-                    ch[j] = c;
-                }
-
-                //Console.WriteLine(new string(ch));
-
 
                 indexEnd = indexEnd - blockLength + 1;
             }
