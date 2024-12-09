@@ -13,18 +13,14 @@ namespace AdventOfCode2024.Day09
             string str = base.Expand(lines[0]);
             string str2 = base.Compact(str);
 
-            //long checksum = base.CheckSum(str2);
-            long checksum = base.CheckSum2(str2);
 
-            // bad: 
-            // 90840102756
-            // 5650446069
+            long checksum = base.CheckSum(str2);
+
 
             string f = checksum.ToString();
 
             return f;
         }
-
 
     }
 }

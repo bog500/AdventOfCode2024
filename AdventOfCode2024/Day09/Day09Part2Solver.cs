@@ -11,7 +11,16 @@ namespace AdventOfCode2024.Day09
 
         public override string Solve(List<string> lines)
         {
-            return "";
+            string str = base.Expand(lines[0]);
+            string str2 = base.CompactFullBlocks(str);
+
+
+            long checksum = base.CheckSum(str2);
+
+
+            string f = checksum.ToString();
+
+            return f;
         }
 
     }

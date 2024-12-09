@@ -1,6 +1,8 @@
 ﻿
 using AdventOfCode2024.Common;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace AdventOfCode2024.Day09
@@ -43,8 +45,42 @@ namespace AdventOfCode2024.Day09
         }
 
 
-        Dictionary<int, int> idOriginal = [];
-        Dictionary<int, int> idMoved = [];
+        Dictionary<int, int> idOriginal = []; // index -> id
+        Dictionary<int, int> idMoved = []; // index -> id
+        HashSet<int> movedIds = []; // already moved ids
+
+        public int GetId(int index)
+        {
+            if (!idMoved.TryGetValue(index, out int id))
+            {
+                id = idOriginal[index];
+            }
+            return id;
+        }
+
+        public long CheckSum(string str)
+        {
+            int index = -1;
+            long sum = 0;
+            foreach (char c in str)
+            {
+                index++;
+
+                if (c == '.')
+                    continue;
+
+                int id = GetId(index);
+
+                sum += index * id;
+
+            }
+
+            // bad:
+            // 7023831612552 (too big)
+            // 7022283591665 (too big)
+
+            return sum;
+        }
 
         public string Compact(string str)
         {
@@ -58,15 +94,15 @@ namespace AdventOfCode2024.Day09
                 if (c == '.')
                     continue;
 
-                
+
                 ch[index] = '.';
 
-                for(int j = minJ; j < str.Length; j++)
+                for (int j = minJ; j < str.Length; j++)
                 {
                     if (ch[j] == '.')
                     {
 
-                        if(!idMoved.TryGetValue(index, out int id))
+                        if (!idMoved.TryGetValue(index, out int id))
                         {
                             idOriginal.TryGetValue(index, out id);
                         }
@@ -74,8 +110,8 @@ namespace AdventOfCode2024.Day09
                         idMoved[j] = id;
 
                         ch[j] = c;
-                        minJ = j-1;
-                        j = int.MaxValue-1; // exit for loop
+                        minJ = j - 1;
+                        j = int.MaxValue - 1; // exit for loop
                     }
                 }
             }
@@ -85,43 +121,83 @@ namespace AdventOfCode2024.Day09
         }
 
 
-        public long CheckSum2(string str)
+        public string CompactFullBlocks(string str)
         {
-            int index = 0;
-            long sum = 0;
-            foreach (char c in str)
-            {
-                if (c == '.')
-                    break;
+            char[] ch = str.ToCharArray();
 
-                if(!idMoved.TryGetValue(index, out int id))
+            for (int indexEnd = str.Length - 1; indexEnd > 0; indexEnd--)
+            {
+                char c = ch[indexEnd];
+                if (c == '.')
+                    continue;
+
+                int id = GetId(indexEnd);
+
+                if (movedIds.Contains(id))
+                    continue;
+
+                // find start of block
+                int indexStart = indexEnd;
+                while (indexStart >= 0 && ch[indexStart] == c)
                 {
-                    id = idOriginal[index];
+                    char c2 = ch[indexStart];
+                    indexStart--;
+                }
+                indexStart++; // cancel last indexStart--
+
+                if (indexStart < 0)
+                    continue;
+
+                int blockLength = indexEnd - indexStart + 1;
+
+                // find spot
+                int spotStart = -1;
+                for(int i = 0; i < indexStart; i++)
+                {
+                    if(ch[i..(i + blockLength)].All(o => o == '.'))
+                    {
+                        // spot found
+                        spotStart = i;
+                        break;
+                    }
+                    i += 1;
                 }
 
-                sum += index * id;
+                if (spotStart < 0)
+                {
+                    indexEnd = indexEnd - blockLength + 1;
+                    continue; // no spot
+                }
 
-                index++;
+                movedIds.Add(id);
+
+                //Console.WriteLine(new string(ch));
+
+
+                // remove original block
+                for (int i = indexStart; i <= indexEnd; i++)
+                {
+                    ch[i] = '.';
+                    idOriginal[i] = 0;
+                }
+
+                //Console.WriteLine(new string(ch));
+
+                for (int j = spotStart; j < spotStart + blockLength; j++)
+                {
+                    idMoved[j] = id;
+                    ch[j] = c;
+                }
+
+                //Console.WriteLine(new string(ch));
+
+
+                indexEnd = indexEnd - blockLength + 1;
             }
-            return sum;
+
+            string str2 = new string(ch);
+            return str2;
         }
 
-        public long CheckSum(string str)
-        {
-            long index = 0;
-            long sum = 0;
-            foreach(char c in str)
-            {
-                if (c == '.')
-                    break;
-
-                int num = Parser.CharToInt(c);
-                long partial = index * num;
-                sum += partial;
-
-                index++;
-            }
-            return sum;
-        }
     }
 }
