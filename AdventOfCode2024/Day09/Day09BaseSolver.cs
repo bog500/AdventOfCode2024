@@ -136,6 +136,20 @@ namespace AdventOfCode2024.Day09
             return EMPTY;
         }
 
+        public IEnumerable<int> GetBlocksIndex(int id, int indexEnd)
+        {
+            for(int i = 0; i < 10; i++)
+            {
+                int ind = indexEnd - i;
+
+                if (!ids.ContainsKey(ind))
+                    continue;
+
+                if (ids[ind] == id)
+                    yield return ind;
+            }
+        }
+
         public string CompactFullBlocks(string str)
         {
             char[] ch = str.ToCharArray();
@@ -151,9 +165,11 @@ namespace AdventOfCode2024.Day09
                     continue;
 
                 // find start of block
-                var blocks = ids.Where(o => o.Value == id);
-                int blockLength = blocks.Count();
-                int indexStart = blocks.Select(o => o.Key).Min();
+                var indexes = GetBlocksIndex(id, indexEnd).ToList();
+
+                int blockLength = indexes.Count;
+
+                int indexStart = indexes.Last(); // min is last
 
                 int spotStart = Findspot(indexStart, blockLength);
 
