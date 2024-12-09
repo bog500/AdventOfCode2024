@@ -8,11 +8,7 @@ namespace AdventOfCode2024.Day07
 
     public class Day07Part2Solver : Day07BaseSolver
     {
-
-        public override string Solve(List<string> lines)
-        {
-            return "";
-        }
+        protected override List<char> DefaultOperators => ['|', '*', '+'];
 
     }
 }
