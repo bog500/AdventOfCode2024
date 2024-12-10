@@ -7,11 +7,8 @@ namespace AdventOfCode2024.Day10
 {
     public abstract class Day10BaseSolver : IPartSolver
     {
-        HashSet<Coord> starts = [];
-        Dictionary<Coord, int> map = [];
-
-        Dictionary<Coord, HashSet<Coord>> visited = [];
-        Dictionary<Coord, HashSet<Coord>> submitVisited = [];
+        protected HashSet<Coord> starts = [];
+        protected Dictionary<Coord, int> map = [];
 
         int mapMaxX = 0;
         int mapMaxY = 0;
@@ -41,13 +38,10 @@ namespace AdventOfCode2024.Day10
                 mapMaxY = y;
             }
 
-            // init visited dictionaries
-            foreach(Coord start in starts)
-            {
-                visited.Add(start, []);
-                submitVisited.Add(start, []);
-            }
+
         }
+
+        protected abstract void Explore(Coord start, Coord location);
 
         protected void ExploreStart()
         {
@@ -57,36 +51,7 @@ namespace AdventOfCode2024.Day10
             }
         }
 
-        protected long GetScore()
-        {
-            long sum = 0;
-            foreach (Coord start in starts)
-            {
-                int score = submitVisited[start].Count;
-                sum += score;
-            }
 
-            //bad : 6395800119709
-
-            return sum;
-        }
-
-        protected void Explore(Coord startLocation, Coord fromLocation)
-        {
-            if (GetHeight(fromLocation) == 9)
-                submitVisited[startLocation].Add(fromLocation);
-
-            visited[startLocation].Add(fromLocation);
-
-            var coords = FindNextCoords(fromLocation);
-            foreach(var c in coords)
-            {
-                if (visited[startLocation].Contains(c))
-                    continue;
-
-                Explore(startLocation, c);
-            }
-        }
 
         protected int GetHeight(Coord c)
         {

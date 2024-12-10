@@ -14,5 +14,9 @@ namespace AdventOfCode2024.Day10
             return "";
         }
 
+        protected override void Explore(Coord start, Coord location)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
