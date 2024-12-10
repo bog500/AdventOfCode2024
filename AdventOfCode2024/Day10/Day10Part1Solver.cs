@@ -10,7 +10,11 @@ namespace AdventOfCode2024.Day10
 
         public override string Solve(List<string> lines)
         {
-            return "";
+            base.CreateMap(lines);
+            base.ExploreStart();
+            var score = GetScore();
+            return score + "";
+
         }
 
 

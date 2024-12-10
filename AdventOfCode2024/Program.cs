@@ -2,18 +2,19 @@
 using static AdventOfCode2024.Common.Enums;
 
 
-
-IDayRunner runner1 = DayRunners.Get(DayEnum.Day09, PartEnum.Part1, FileEnum.Demo1);
+/*
+IDayRunner runner1 = DayRunners.Get(DayEnum.Day10, PartEnum.Part1, FileEnum.Demo1);
 runner1.Run();
+*/
 
-
-IDayRunner runner2 = DayRunners.Get(DayEnum.Day09, PartEnum.Part1, FileEnum.Clue);
+IDayRunner runner2 = DayRunners.Get(DayEnum.Day10, PartEnum.Part1, FileEnum.Clue);
 runner2.Run();
 
-
-IDayRunner runner3 = DayRunners.Get(DayEnum.Day09, PartEnum.Part2, FileEnum.Demo1);
+/*
+IDayRunner runner3 = DayRunners.Get(DayEnum.Day10, PartEnum.Part2, FileEnum.Demo1);
 runner3.Run();
 
 
-IDayRunner runner4 = DayRunners.Get(DayEnum.Day09, PartEnum.Part2, FileEnum.Clue);
+IDayRunner runner4 = DayRunners.Get(DayEnum.Day10, PartEnum.Part2, FileEnum.Clue);
 runner4.Run();
+*/
