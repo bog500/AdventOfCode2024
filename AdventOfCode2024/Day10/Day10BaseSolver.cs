@@ -41,18 +41,6 @@ namespace AdventOfCode2024.Day10
 
         }
 
-        protected abstract void Explore(Coord start, Coord location);
-
-        protected void ExploreStart()
-        {
-            foreach (Coord start in starts)
-            {
-                Explore(start, start);
-            }
-        }
-
-
-
         protected int GetHeight(Coord c)
         {
             if (map.TryGetValue(c, out int height))

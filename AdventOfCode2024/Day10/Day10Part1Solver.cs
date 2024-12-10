@@ -39,13 +39,18 @@ namespace AdventOfCode2024.Day10
                 int score = submitVisited[start].Count;
                 sum += score;
             }
-
-            //bad : 6395800119709
-
             return sum;
         }
 
-        protected override void Explore(Coord startLocation, Coord fromLocation)
+        protected void ExploreStart()
+        {
+            foreach (Coord start in starts)
+            {
+                Explore(start, start);
+            }
+        }
+
+        protected void Explore(Coord startLocation, Coord fromLocation)
         {
             if (GetHeight(fromLocation) == 9)
                 submitVisited[startLocation].Add(fromLocation);
