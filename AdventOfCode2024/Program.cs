@@ -2,10 +2,10 @@
 using static AdventOfCode2024.Common.Enums;
 
 
-
+/*
 IDayRunner runner1 = DayRunners.Get(DayEnum.Day11, PartEnum.Part1, FileEnum.Demo1);
 runner1.Run();
-
+*/
 
 
 /*
@@ -20,7 +20,6 @@ runner3.Run();
 */
 
 
-/*
+
 IDayRunner runner4 = DayRunners.Get(DayEnum.Day11, PartEnum.Part2, FileEnum.Clue);
 runner4.Run();
-*/
