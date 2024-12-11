@@ -8,6 +8,7 @@ namespace AdventOfCode2024.Day11
     
     public abstract class Day11BaseSolver : IPartSolver
     {
+
         protected Stone? stone1;
 
         protected Dictionary<Stone, (Stone? previous, Stone? next)> stones = [];
@@ -22,27 +23,45 @@ namespace AdventOfCode2024.Day11
             foreach(var number in values)
             {
                 Stone s = new(number);
+                stones.Add(s, (null, null));
+
                 if (previous == null)
                 {
                     stone1 = s;
                 }
                 else
                 {
-                    s.Previous = previous;
-                    previous.Next = s;
+                    SetPrevious(s, previous);
+                    SetNext(previous, s);
                 }
                 previous = s;
-
-
             }
+        }
+
+
+
+        public void SetPrevious(Stone s, Stone? previous)
+        {
+            if (!stones.ContainsKey(s))
+                stones.Add(s, (previous, null));
+            else
+                stones[s] = (previous, stones[s].next);
+        }
+
+        public void SetNext(Stone s, Stone? next)
+        {
+            if (!stones.ContainsKey(s))
+                stones.Add(s, (null, next));
+            else
+                stones[s] = (stones[s].previous, next);
         }
 
         public int CountStones(Stone s)
         {
-            if (s.Next is null)
+            if (stones[s].next is null)
                 return 1;
             else
-                return CountStones(s.Next) + 1;
+                return CountStones(stones[s].next) + 1;
         }
 
         public void Blink(int count)
@@ -64,7 +83,7 @@ namespace AdventOfCode2024.Day11
 
 
         }
-
+        /*
         public void Print(Stone? s)
         {
             if (s == null)
@@ -74,11 +93,11 @@ namespace AdventOfCode2024.Day11
                 Console.Write(s.Number + " ");
                 Print(s.Next);
             }
-        }
+        }*/
 
         public Stone? UpdateStones(Stone s)
         {
-            Stone? nextStone = s.Next;
+            Stone? nextStone = stones[s].next;
 
             if ( s.Number == 0)
             {
@@ -86,8 +105,8 @@ namespace AdventOfCode2024.Day11
             }
             else if(int.IsEvenInteger(s.Number.NbDigits()))
             {
-                Stone? previous = s.Previous;
-                Stone? next = s.Next;
+                Stone? previous = stones[s].previous;
+                Stone? next = stones[s].next;
 
                 (long num1, long num2) numbers = SplitNum(s.Number);
 
@@ -97,20 +116,28 @@ namespace AdventOfCode2024.Day11
                 // update links
 
                 if (previous is null)
+                {
+                    stones.Remove(stone1);
                     stone1 = newStone1;
+                }
                 else
-                    previous.Next = newStone1;
+                {
+                    SetNext(previous, newStone1);
+                }
+                    
 
-                newStone1.Previous = previous;
-                newStone1.Next = newStone2;
+                SetPrevious(newStone1, previous);
+                SetNext(newStone1, newStone2);
 
-                newStone2.Previous = newStone1;
-                newStone2.Next = next;
+                SetPrevious(newStone2, newStone1);
+                SetNext(newStone2, next);
 
                 if (next is not null)
-                    next.Previous = newStone2;
+                    SetPrevious(next, newStone2);
 
                 nextStone = next;
+
+                stones.Remove(s);
 
             }
             else
@@ -138,9 +165,6 @@ namespace AdventOfCode2024.Day11
     public class Stone
     {
         public long Number { get; set; }
-
-        public Stone? Previous { get; set; }
-        public Stone? Next { get; set; }
      
         public Stone(long num)
         {

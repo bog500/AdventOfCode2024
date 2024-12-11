@@ -11,8 +11,8 @@ namespace AdventOfCode2024.Day11
         public override string Solve(List<string> lines)
         {
             CreateArrangement(lines[0]);
-            Blink(22);
-            return CountStones(stone1) + "";
+            Blink(25);
+            return stones.Count + "";
         }
 
 
