@@ -10,7 +10,9 @@ namespace AdventOfCode2024.Day11
 
         public override string Solve(List<string> lines)
         {
-            return "";
+            CreateArrangement(lines[0]);
+            Blink(22);
+            return CountStones(stone1) + "";
         }
 
 
