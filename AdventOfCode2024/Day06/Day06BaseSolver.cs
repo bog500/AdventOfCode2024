@@ -32,9 +32,9 @@ namespace AdventOfCode2024.Day06
         {
             return dir switch
             {
-                Enums.Direction.Down => IsObstacle(position.MoveBottom()) ? NextStep(position, Enums.Direction.Left) : (position.MoveBottom(), Enums.Direction.Down),
+                Enums.Direction.Down => IsObstacle(position.MoveDown()) ? NextStep(position, Enums.Direction.Left) : (position.MoveDown(), Enums.Direction.Down),
                 Enums.Direction.Left => IsObstacle(position.MoveLeft()) ? NextStep(position, Enums.Direction.Up) : (position.MoveLeft(), Enums.Direction.Left),
-                Enums.Direction.Up => IsObstacle(position.MoveTop()) ? NextStep(position, Enums.Direction.Right) : (position.MoveTop(), Enums.Direction.Up),
+                Enums.Direction.Up => IsObstacle(position.MoveUp()) ? NextStep(position, Enums.Direction.Right) : (position.MoveUp(), Enums.Direction.Up),
                 Enums.Direction.Right => IsObstacle(position.MoveRight()) ? NextStep(position, Enums.Direction.Down) : (position.MoveRight(), Enums.Direction.Right),
             };
         }

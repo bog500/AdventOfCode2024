@@ -54,8 +54,8 @@ namespace AdventOfCode2024.Day10
 
             int left = GetHeight(fromLocation.MoveLeft());
             int right = GetHeight(fromLocation.MoveRight());
-            int up = GetHeight(fromLocation.MoveTop());
-            int down = GetHeight(fromLocation.MoveBottom());
+            int up = GetHeight(fromLocation.MoveUp());
+            int down = GetHeight(fromLocation.MoveDown());
 
             if (left - currentHeight == 1)
                 yield return fromLocation.MoveLeft();
@@ -64,10 +64,10 @@ namespace AdventOfCode2024.Day10
                 yield return fromLocation.MoveRight();
 
             if (up - currentHeight == 1)
-                yield return fromLocation.MoveTop();
+                yield return fromLocation.MoveUp();
 
             if (down - currentHeight == 1)
-                yield return fromLocation.MoveBottom();
+                yield return fromLocation.MoveDown();
 
         }
     }

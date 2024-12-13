@@ -10,7 +10,10 @@ namespace AdventOfCode2024.Day12
 
         public override string Solve(List<string> lines)
         {
-            return "";
+            CreateMap(lines);
+            CreateRegions();
+            int price = GetTotalPriceWithPerimeter();
+            return price + "";
         }
 
 
