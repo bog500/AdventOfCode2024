@@ -133,11 +133,15 @@ namespace AdventOfCode2024.Day12
 
         public int Perimeter { get; set; } = 0;
 
-        public int Sides { get; set; } = 0;
+        public int CountSides()
+        {
+            //todo
+            return 0;
+        }
 
         public int Area => this.Tiles.Count;
 
         public int PerimeterPrice => Perimeter * Area;
-        public int SidePrice => Sides * Area;
+        public int SidePrice => CountSides() * Area;
     }
 }

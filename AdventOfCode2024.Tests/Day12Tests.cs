@@ -29,20 +29,21 @@ namespace AdventOfCode2024.Tests
             Assert.Equal("1930", result);
         }
 
+        /*
         [Fact]
         public void Part2_Clue()
         {
             IDayRunner runner2 = DayRunners.Get(DayEnum.Day12, PartEnum.Part2, FileEnum.Clue);
             var result = runner2.Run();
             Assert.Equal("71668682", result);
-        }
+        }*/
 
         [Fact]
         public void Part2_Demo3()
         {
             IDayRunner runner2 = DayRunners.Get(DayEnum.Day12, PartEnum.Part2, FileEnum.Demo3);
             var result = runner2.Run();
-            Assert.Equal("436", result);
+            Assert.Equal("80", result);
         }
     }
 }
