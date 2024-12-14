@@ -8,12 +8,12 @@ namespace AdventOfCode2024.Day12
 
     public class Day12Part2Solver : Day12BaseSolver
     {
-
+        // does not work
         public override string Solve(List<string> lines)
         {
             CreateMap(lines);
             CreateRegions();
-            int price = GetTotalPriceWithSides();
+            long price = GetTotalPriceWithSides();
             return price + "";
         }
 

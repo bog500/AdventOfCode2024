@@ -11,7 +11,17 @@ namespace AdventOfCode2024.Day13
 
         public override string Solve(List<string> lines)
         {
-            return "";
+
+            var games = CreateGames(lines);
+
+            foreach(var g in games)
+            {
+                g.AddToPrice(10000000000000);
+            }
+
+            var sum = GetSum(games);
+
+            return sum + "";
         }
 
     }

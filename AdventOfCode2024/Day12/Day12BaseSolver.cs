@@ -76,9 +76,9 @@ namespace AdventOfCode2024.Day12
             return sum;
         }
 
-        public int GetTotalPriceWithSides()
+        public long GetTotalPriceWithSides()
         {
-            int sum = 0;
+            long sum = 0;
             foreach (var r in regions)
             {
                 sum += r.SidePrice;
@@ -117,6 +117,61 @@ namespace AdventOfCode2024.Day12
                     4 => r.Perimeter - 4,
                 };
             }
+
+            //adjust sides
+            if (r.Tiles.Count == 1)
+            {
+                r.Sides = 4;
+            }
+            else
+            {
+                int nbNeighbors = 0;
+                foreach (var neighborCoord in c.MoveAll4())
+                {
+                    if (r.Tiles.Contains(neighborCoord))
+                    {
+                        nbNeighbors++;
+                    }
+                }
+
+                int nbNeighborsDiag = 0;
+                foreach (var neighborCoord in c.MoveAll4Diag())
+                {
+                    if (r.Tiles.Contains(neighborCoord))
+                    {
+                        nbNeighborsDiag++;
+                    }
+                }
+
+                r.Sides = (nbNeighbors, nbNeighborsDiag) switch
+                {
+                    (1, 0) => r.Sides,
+                    (1, 1) => r.Sides + 2,
+                    (1, 2) => r.Sides + 2,
+                    (1, 3) => r.Sides + 4,
+                    (1, 4) => r.Sides + 4,
+
+                    (2, 0) => r.Sides,
+                    (2, 1) => r.Sides - 2,
+                    (2, 2) => r.Sides,
+                    (2, 3) => r.Sides + 2,
+                    (2, 4) => r.Sides + 4,
+
+                    (3, 0) => r.Sides - 4,
+                    (3, 1) => r.Sides - 4,
+                    (3, 2) => r.Sides - 4,
+                    (3, 3) => r.Sides - 2,
+                    (3, 4) => r.Sides,
+
+                    (4, _) => r.Sides - 4,
+
+                    ( < 1, _) => throw new InvalidDataException(),
+                    ( > 4, _) => throw new InvalidDataException(),
+                    (_,  < 0) => throw new InvalidDataException(),
+                    (_,  > 4) => throw new InvalidDataException(),
+                };
+            }
+
             return true;
         }
     }
@@ -132,16 +187,11 @@ namespace AdventOfCode2024.Day12
         public HashSet<Coord> Tiles { get; set; } = [];
 
         public int Perimeter { get; set; } = 0;
-
-        public int CountSides()
-        {
-            //todo
-            return 0;
-        }
+        public int Sides { get; set; } = 0;
 
         public int Area => this.Tiles.Count;
 
         public int PerimeterPrice => Perimeter * Area;
-        public int SidePrice => CountSides() * Area;
+        public int SidePrice => Sides * Area;
     }
 }

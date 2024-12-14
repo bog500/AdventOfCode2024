@@ -12,7 +12,7 @@ namespace AdventOfCode2024.Common
 
         public enum PartEnum { Part1, Part2 }
 
-        public enum FileEnum { Default, Demo1, Demo2, Demo3, Demo4, Test1, Test2, Clue }
+        public enum FileEnum { Default, Demo1, Demo2, Demo3, Demo4, Demo5, Test1, Test2, Clue }
 
         public enum DayEnum 
         { 

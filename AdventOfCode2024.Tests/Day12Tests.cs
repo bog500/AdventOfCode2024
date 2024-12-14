@@ -29,14 +29,17 @@ namespace AdventOfCode2024.Tests
             Assert.Equal("1930", result);
         }
 
-        /*
+        
         [Fact]
         public void Part2_Clue()
         {
             IDayRunner runner2 = DayRunners.Get(DayEnum.Day12, PartEnum.Part2, FileEnum.Clue);
             var result = runner2.Run();
+            // bad 709490 (too low)
+
+            // bad 7094900 (too high)
             Assert.Equal("71668682", result);
-        }*/
+        }
 
         [Fact]
         public void Part2_Demo3()
@@ -44,6 +47,22 @@ namespace AdventOfCode2024.Tests
             IDayRunner runner2 = DayRunners.Get(DayEnum.Day12, PartEnum.Part2, FileEnum.Demo3);
             var result = runner2.Run();
             Assert.Equal("80", result);
+        }
+
+        [Fact]
+        public void Part2_Demo4()
+        {
+            IDayRunner runner2 = DayRunners.Get(DayEnum.Day12, PartEnum.Part2, FileEnum.Demo4);
+            var result = runner2.Run();
+            Assert.Equal("236", result);
+        }
+
+        [Fact]
+        public void Part2_Demo5()
+        {
+            IDayRunner runner2 = DayRunners.Get(DayEnum.Day12, PartEnum.Part2, FileEnum.Demo5);
+            var result = runner2.Run();
+            Assert.Equal("368", result);
         }
     }
 }
