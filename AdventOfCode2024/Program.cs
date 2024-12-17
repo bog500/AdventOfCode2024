@@ -8,10 +8,10 @@ runner1.Run();
 */
 
 
-
+/*
 IDayRunner runner2 = DayRunners.Get(DayEnum.Day14, PartEnum.Part1, FileEnum.Clue);
 runner2.Run();
-
+*/
 
 
 /*
@@ -20,7 +20,6 @@ runner3.Run();
 */
 
 
-/*
+
 IDayRunner runner4 = DayRunners.Get(DayEnum.Day14, PartEnum.Part2, FileEnum.Clue);
 runner4.Run();
-*/

@@ -11,9 +11,11 @@ namespace AdventOfCode2024.Day14
     {
         public abstract string Solve(List<string> lines);
 
+        protected (int maxX, int maxY) maximums;
+
         public List<Robot> GetRobots(List<string> lines)
         {
-            (int maxX, int maxY) maximums = ParseSize(lines[0]);
+            maximums = ParseSize(lines[0]);
 
             List<Robot> robots = [];
 
