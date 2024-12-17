@@ -10,7 +10,19 @@ namespace AdventOfCode2024.Day14
 
         public override string Solve(List<string> lines)
         {
-            return "";
+            var robots = GetRobots(lines);
+
+            for(int i = 0; i < 100; i++)
+            {
+                foreach(var r in robots)
+                {
+                    r.Move();
+                }
+            }
+
+            int sum = GetSafertyFactor(robots);
+
+            return sum + "";
         }
 
 
