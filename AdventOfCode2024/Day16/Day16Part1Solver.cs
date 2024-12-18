@@ -10,7 +10,10 @@ namespace AdventOfCode2024.Day16
 
         public override string Solve(List<string> lines)
         {
-            return "";
+            base.CreateMaze(lines);
+            //base.Explore(Start, Enums.Direction.Right, 0, 0);
+            base.ExploreStack();
+            return base.BestScore + "";
         }
 
 

@@ -32,6 +32,11 @@
             return this == other;
         }
 
+        public override string ToString()
+        {
+            return $"{X},{Y}";
+        }
+
         public static bool operator == (Coord a, Coord b) => a.X == b.X && a.Y == b.Y;
         public static bool operator != (Coord a, Coord b) => !(a == b);
 
@@ -62,6 +67,4 @@
         public static bool operator ==(Coord3D a, Coord3D b) => a.X == b.X && a.Y == b.Y && a.Z == b.Z;
         public static bool operator !=(Coord3D a, Coord3D b) => !(a == b);
     }
-
-    
 }
